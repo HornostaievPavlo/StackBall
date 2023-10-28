@@ -4,13 +4,17 @@ public class LevelInstantiator : MonoBehaviour
 {
     public GameObject[] obstacles;
 
-    [HideInInspector] 
+    [SerializeField]
+    private GameObject floorPrefab;
+
+    [SerializeField]
+    private Transform obstaclesParent;
+
+    [HideInInspector]
     public GameObject[] currentLevelObstacles = new GameObject[4];
 
-    public GameObject floorPrefab;
-
-    private GameObject temp1;
-    private GameObject temp2;
+    private GameObject obstacle;
+    private GameObject floor;
 
     public int level = 1;
     public int addOn = 7;
@@ -59,25 +63,44 @@ public class LevelInstantiator : MonoBehaviour
 
     private void InstantiateObstaclesForLevel()
     {
+        float random = Random.value;
+
         for (i = 0; i > -level - addOn; i -= 0.5f)
         {
             if (level <= 20)
-                temp1 = Instantiate(currentLevelObstacles[Random.Range(0, 2)]);
+                obstacle = Instantiate(currentLevelObstacles[Random.Range(0, 2)]);
 
             if (level > 20 && level <= 50)
-                temp1 = Instantiate(currentLevelObstacles[Random.Range(1, 3)]);
+                obstacle = Instantiate(currentLevelObstacles[Random.Range(1, 3)]);
 
             if (level > 50 && level <= 100)
-                temp1 = Instantiate(currentLevelObstacles[Random.Range(2, 4)]);
+                obstacle = Instantiate(currentLevelObstacles[Random.Range(2, 4)]);
 
             if (level > 100)
-                temp1 = Instantiate(currentLevelObstacles[Random.Range(3, 4)]);
+                obstacle = Instantiate(currentLevelObstacles[Random.Range(3, 4)]);
 
-            temp1.transform.position = new Vector3(0, i - 0.01f, 0);
-            temp1.transform.eulerAngles = new Vector3(0, i * 8, 0);
+            obstacle.transform.position = new Vector3(0, i - 0.01f, 0);
+            obstacle.transform.eulerAngles = new Vector3(0, i * 8, 0);
+
+            obstacle.transform.parent = obstaclesParent;
+
+            if (Mathf.Abs(i) >= level * 0.3f && Mathf.Abs(i) <= level * 0.6f)
+            {
+                obstacle.transform.eulerAngles = new Vector3(0, i * 8, 0);
+                obstacle.transform.eulerAngles += Vector3.up * 180f;
+            }
+            else if (Mathf.Abs(i) >= level * 0.8f)
+            {
+                obstacle.transform.eulerAngles = new Vector3(0, i * 8, 0);
+
+                if (random > 0.75f)
+                {
+                    obstacle.transform.eulerAngles += Vector3.up * 180f;
+                }
+            }
         }
 
-        temp2 = Instantiate(floorPrefab);
-        temp2.transform.position = new Vector3(0, i - 0.01f, 0);
+        floor = Instantiate(floorPrefab);
+        floor.transform.position = new Vector3(0, i - 0.01f, 0);
     }
 }
