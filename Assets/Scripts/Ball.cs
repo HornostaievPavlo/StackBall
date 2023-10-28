@@ -5,26 +5,17 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public bool isSmashing;
+    private bool isSmashing;
 
     public UnityEvent BreakableSurfaceHit = new UnityEvent();
     public UnityEvent UnBreakableSurfaceHit = new UnityEvent();
     public UnityEvent FloorHit = new UnityEvent();
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    private void Awake() => rb = GetComponent<Rigidbody>();
 
-    private void Update()
-    {
-        ProcessInput();
-    }
+    private void Update() => ProcessInput();
 
-    private void FixedUpdate()
-    {
-        ControlVelocity();
-    }
+    private void FixedUpdate() => ControlVelocity();
 
     private void OnCollisionEnter(Collision collision)
     {
