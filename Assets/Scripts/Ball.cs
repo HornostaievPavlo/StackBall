@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
     private Rigidbody rb;
 
     public bool isSmashing;
+
+    public UnityEvent BreakableSurfaceHit = new UnityEvent();
+    public UnityEvent UnBreakableSurfaceHit = new UnityEvent();
+    public UnityEvent FloorHit = new UnityEvent();
 
     private void Awake()
     {
@@ -26,19 +31,23 @@ public class Ball : MonoBehaviour
         if (isSmashing)
         {
             var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
-            Debug.Log(hitSurfaceType.ToString());
 
             switch (hitSurfaceType)
             {
                 case SurfaceType.Breakable:
+
+                    BreakableSurfaceHit.Invoke();
+
                     var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
                     circle.ShatterWholeCircle();
                     break;
 
                 case SurfaceType.Unbreakable:
+                    UnBreakableSurfaceHit.Invoke();
                     break;
 
                 case SurfaceType.Floor:
+                    FloorHit.Invoke();
                     break;
             }
         }
