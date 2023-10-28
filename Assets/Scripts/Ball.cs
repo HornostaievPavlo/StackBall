@@ -4,7 +4,7 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody rb;
 
-    private bool isSmashing;
+    public bool isSmashing;
 
     private void Awake()
     {
@@ -23,33 +23,37 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!isSmashing)
+        if (isSmashing)
+        {
+            var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
+            Debug.Log(hitSurfaceType.ToString());
+
+            switch (hitSurfaceType)
+            {
+                case SurfaceType.Breakable:
+                    var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
+                    circle.ShatterWholeCircle();
+                    break;
+
+                case SurfaceType.Unbreakable:
+                    break;
+
+                case SurfaceType.Floor:
+                    break;
+            }
+        }
+        else
         {
             float verticalVelocity = 50f * Time.deltaTime * 5f;
             rb.velocity = new Vector3(0, verticalVelocity, 0);
-        }
-        else // redo
-        {
-            if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "plane")
-            {
-                var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
-                circle.ShatterWholeCircle();
-            }
-            if (collision.gameObject.tag == "enemy")
-            {
-                var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
-                circle.ShatterWholeCircle();
-            }
-            if (collision.gameObject.tag == "plane")
-            {
-                Debug.Log("Hit hard part");
-            }
         }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (!isSmashing || collision.gameObject.tag == "Finish") // update
+        var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
+
+        if (hitSurfaceType == SurfaceType.Floor)
         {
             float oppositeVerticalVelocity = 50f * Time.deltaTime * 5f;
             rb.velocity = new Vector3(0, oppositeVerticalVelocity, 0);
