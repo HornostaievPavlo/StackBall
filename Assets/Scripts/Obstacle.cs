@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    private ObstacleCircle obstacleStack;
-
     private Rigidbody rb;
     private MeshRenderer meshRenderer;
     private Collider meshCollider;
@@ -13,8 +11,6 @@ public class Obstacle : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<Collider>();
-
-        obstacleStack = GetComponentInParent<ObstacleCircle>();
     }
 
     public void Shatter()
@@ -36,14 +32,5 @@ public class Obstacle : MonoBehaviour
         rb.AddForceAtPosition(direction * force, forcePoint, ForceMode.Impulse);
         rb.AddTorque(Vector3.left * torque);
         rb.velocity = Vector3.down;
-    }
-
-    public void RemoveChildren()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).SetParent(null);
-            i--;
-        }
     }
 }

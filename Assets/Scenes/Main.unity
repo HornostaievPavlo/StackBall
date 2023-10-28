@@ -304,6 +304,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1abb2d3d74beb4490c7723f81b627d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclesParent: {fileID: 1306800447}
+  floorPrefab: {fileID: 3293644397374515874, guid: de014377afc97fb458185f5869ca0bd9,
+    type: 3}
   obstacles:
   - {fileID: 4083092216702661192, guid: 4090eb26e9a6243499e279e647626f17, type: 3}
   - {fileID: 992441524142787588, guid: b44c72689c6c52746828431f75d73de2, type: 3}
@@ -325,15 +328,7 @@ MonoBehaviour:
   - {fileID: 8173515656159446429, guid: cb7796d3fb1d2ec409be45da689ed427, type: 3}
   - {fileID: 4443300921571106005, guid: f2f4592453b666041979e5c5985244af, type: 3}
   - {fileID: 7491820912803991582, guid: 13c675376bea900468cb73697e203899, type: 3}
-  floorPrefab: {fileID: 3293644397374515874, guid: de014377afc97fb458185f5869ca0bd9,
-    type: 3}
-  obstaclesParent: {fileID: 1306800447}
-  currentLevelObstacles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  level: 1
+  currentLevel: 1
   addOn: 7
 --- !u!4 &395033919
 Transform:
@@ -630,7 +625,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1306800448
 MonoBehaviour:
@@ -762,7 +757,7 @@ Transform:
   m_Children:
   - {fileID: 825154565}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2057664936
 Rigidbody:
