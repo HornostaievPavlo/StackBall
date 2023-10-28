@@ -6,14 +6,14 @@ public class ObstacleCircle : MonoBehaviour
     [SerializeField]
     private Obstacle[] obstacles = null;
 
-    public void ShatterWholeObstacle()
+    public void ShatterWholeCircle()
     {
         if (transform.parent != null)
             transform.parent = null;
 
         foreach (var obstacle in obstacles)
         {
-            obstacle.Shatter();
+            obstacle.ShatterPart();
         }
 
         StartCoroutine(DestroyParts());

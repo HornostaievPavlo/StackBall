@@ -13,24 +13,28 @@ public class Obstacle : MonoBehaviour
         meshCollider = GetComponent<Collider>();
     }
 
-    public void Shatter()
+    public void ShatterPart()
     {
         rb.isKinematic = false;
         meshCollider.enabled = false;
-
-        Vector3 forcePoint = transform.parent.position;
 
         float parentXPos = transform.parent.position.x;
         float thisXPos = meshRenderer.bounds.center.x;
 
         Vector3 subDirection = parentXPos - thisXPos < 0 ? Vector3.right : Vector3.left;
-        Vector3 direction = (Vector3.up * 1.5f + subDirection).normalized;
+        Vector3 forceDirection = (Vector3.up * 1.5f + subDirection).normalized;
 
-        float force = Random.Range(20, 35);
-        float torque = Random.Range(110, 180);
+        float forceMultiplier = Random.Range(20, 35);
+        Vector3 force = forceDirection * forceMultiplier;
+        Vector3 forcePosition = transform.parent.position;
 
-        rb.AddForceAtPosition(direction * force, forcePoint, ForceMode.Impulse);
-        rb.AddTorque(Vector3.left * torque);
+        rb.AddForceAtPosition(force, forcePosition, ForceMode.Impulse);
+
+        float torqueMultiplier = Random.Range(110, 180);
+        Vector3 torque = Vector3.left * torqueMultiplier;
+
+        rb.AddTorque(torque);
+
         rb.velocity = Vector3.down;
     }
 }

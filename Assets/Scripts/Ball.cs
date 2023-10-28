@@ -37,16 +37,16 @@ public class Ball : MonoBehaviour
             {
                 if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "plane")
                 {
-                    var stack = collision.transform.parent.GetComponent<ObstacleCircle>();
-                    stack.ShatterWholeObstacle();
+                    var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
+                    circle.ShatterWholeCircle();
                 }
             }
             else
             {
                 if (collision.gameObject.tag == "enemy")
                 {
-                    var stack = collision.transform.parent.GetComponent<ObstacleCircle>();
-                    stack.ShatterWholeObstacle();
+                    var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
+                    circle.ShatterWholeCircle();
                 }
                 if (collision.gameObject.tag == "plane")
                 {
