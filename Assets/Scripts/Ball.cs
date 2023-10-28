@@ -4,10 +4,7 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody rb;
 
-    private float currentTime;
-
     private bool isSmashing;
-    private bool isInvincible;
 
     private void Awake()
     {
@@ -33,25 +30,19 @@ public class Ball : MonoBehaviour
         }
         else // redo
         {
-            if (isInvincible)
+            if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "plane")
             {
-                if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "plane")
-                {
-                    var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
-                    circle.ShatterWholeCircle();
-                }
+                var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
+                circle.ShatterWholeCircle();
             }
-            else
+            if (collision.gameObject.tag == "enemy")
             {
-                if (collision.gameObject.tag == "enemy")
-                {
-                    var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
-                    circle.ShatterWholeCircle();
-                }
-                if (collision.gameObject.tag == "plane")
-                {
-                    Debug.Log("Hit hard part");
-                }
+                var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
+                circle.ShatterWholeCircle();
+            }
+            if (collision.gameObject.tag == "plane")
+            {
+                Debug.Log("Hit hard part");
             }
         }
     }
@@ -69,29 +60,6 @@ public class Ball : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) isSmashing = true;
         if (Input.GetMouseButtonUp(0)) isSmashing = false;
-
-        if (isInvincible)
-            currentTime -= Time.deltaTime * 0.35f;
-        else
-        {
-            if (isSmashing)
-                currentTime += Time.deltaTime * 0.8f;
-            else
-                currentTime -= Time.deltaTime * 0.5f;
-        }
-
-        if (currentTime >= 1)
-        {
-            currentTime = 1;
-            isInvincible = true;
-        }
-        else if (currentTime <= 0)
-        {
-            currentTime = 0;
-            isInvincible = false;
-        }
-
-        Debug.Log(isInvincible);
     }
 
     private void ControlVelocity()
