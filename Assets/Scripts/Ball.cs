@@ -23,10 +23,24 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isSmashing)
+        if (!isSmashing)
         {
             float verticalVelocity = 50f * Time.deltaTime * 5f;
             rb.velocity = new Vector3(0, verticalVelocity, 0);
+        }
+        else // redo
+        {
+            if (collision.gameObject.tag == "enemy")
+            {
+                Destroy(collision.transform.parent.gameObject);
+            }
+
+            if (collision.gameObject.tag == "plane")
+            {
+                rb.velocity = Vector3.zero;
+                isSmashing = false;
+                Debug.Log("Hit hard part");
+            }
         }
     }
 
