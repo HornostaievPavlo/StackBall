@@ -20,9 +20,9 @@ public class AudioPlayer : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-        EventManager.BallJumpedOnSurface.AddListener(PlayDefaultJumpClip);
-        EventManager.BreakableSurfaceHit.AddListener(PlayBreakableHitClip);
-        EventManager.UnbreakableSurfaceHit.AddListener(PlayUnbreakableHitClip);
+        EventManager.BallJumped.AddListener(PlayDefaultJumpClip);
+        EventManager.BreakableHit.AddListener(PlayBreakableHitClip);
+        EventManager.UnbreakableHit.AddListener(PlayUnbreakableHitClip);
         EventManager.FloorHit.AddListener(PlayFloorHitClip);
     }
 
