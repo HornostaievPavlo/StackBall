@@ -1,16 +1,13 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject splashPrefab;
+
     private Rigidbody rb;
 
     private bool isSmashing;
-
-    public UnityEvent BallJumpedOnSurface = new UnityEvent();
-    public UnityEvent BreakableSurfaceHit = new UnityEvent();
-    public UnityEvent UnBreakableSurfaceHit = new UnityEvent();
-    public UnityEvent FloorHit = new UnityEvent();
 
     private void Awake() => rb = GetComponent<Rigidbody>();
 
@@ -20,47 +17,47 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
+
         if (isSmashing)
         {
-            var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
-
             switch (hitSurfaceType)
             {
                 case SurfaceType.Breakable:
-                    BreakableSurfaceHit.Invoke();
+                    EventManager.HitBreakableSurface();
 
                     var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
                     circle.ShatterWholeCircle();
                     break;
 
                 case SurfaceType.Unbreakable:
-                    UnBreakableSurfaceHit.Invoke();
-
+                    EventManager.HitUnbreakableSurface();
                     rb.isKinematic = true;
                     break;
 
                 case SurfaceType.Floor:
-                    FloorHit.Invoke();
+                    EventManager.HitFloor();
+                    rb.isKinematic = true;
                     break;
             }
         }
         else
         {
-            BallJumpedOnSurface.Invoke();
+            if (hitSurfaceType == SurfaceType.Floor)
+            {
+                EventManager.HitFloor();
+                rb.isKinematic = true;
+            }
 
-            float verticalVelocity = 50f * Time.deltaTime * 5f;
-            rb.velocity = new Vector3(0, verticalVelocity, 0);
-        }
-    }
+            EventManager.JumpOnSurface();
 
-    private void OnCollisionStay(Collision collision)
-    {
-        var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
+            var splash = Instantiate(splashPrefab, collision.transform);
 
-        if (hitSurfaceType == SurfaceType.Floor)
-        {
-            float oppositeVerticalVelocity = 50f * Time.deltaTime * 5f;
-            rb.velocity = new Vector3(0, oppositeVerticalVelocity, 0);
+            float verticalOffsetFromBall = transform.position.y - 0.22f;
+            splash.transform.position = new Vector3(transform.position.x, verticalOffsetFromBall, transform.position.z);
+
+            float verticalVelocityValue = 50f * Time.deltaTime * 5f;
+            rb.velocity = new Vector3(0, verticalVelocityValue, 0);
         }
     }
 

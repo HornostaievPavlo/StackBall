@@ -3,9 +3,6 @@ using UnityEngine;
 public class AudioPlayer : MonoBehaviour
 {
     [SerializeField]
-    private Ball ball;
-
-    [SerializeField]
     private AudioClip defaultJumpClip;
 
     [SerializeField]
@@ -23,10 +20,10 @@ public class AudioPlayer : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-        ball.BallJumpedOnSurface.AddListener(PlayDefaultJumpClip);
-        ball.BreakableSurfaceHit.AddListener(PlayBreakableHitClip);
-        ball.UnBreakableSurfaceHit.AddListener(PlayUnbreakableHitClip);
-        ball.FloorHit.AddListener(PlayFloorHitClip);
+        EventManager.BallJumpedOnSurface.AddListener(PlayDefaultJumpClip);
+        EventManager.BreakableSurfaceHit.AddListener(PlayBreakableHitClip);
+        EventManager.UnbreakableSurfaceHit.AddListener(PlayUnbreakableHitClip);
+        EventManager.FloorHit.AddListener(PlayFloorHitClip);
     }
 
     private void PlayDefaultJumpClip() => audioSource.PlayOneShot(defaultJumpClip);
