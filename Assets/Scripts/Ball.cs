@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
 
     private bool isSmashing;
 
+    public UnityEvent BallJumpedOnSurface = new UnityEvent();
     public UnityEvent BreakableSurfaceHit = new UnityEvent();
     public UnityEvent UnBreakableSurfaceHit = new UnityEvent();
     public UnityEvent FloorHit = new UnityEvent();
@@ -26,7 +27,6 @@ public class Ball : MonoBehaviour
             switch (hitSurfaceType)
             {
                 case SurfaceType.Breakable:
-
                     BreakableSurfaceHit.Invoke();
 
                     var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
@@ -35,6 +35,8 @@ public class Ball : MonoBehaviour
 
                 case SurfaceType.Unbreakable:
                     UnBreakableSurfaceHit.Invoke();
+
+                    rb.isKinematic = true;
                     break;
 
                 case SurfaceType.Floor:
@@ -44,6 +46,8 @@ public class Ball : MonoBehaviour
         }
         else
         {
+            BallJumpedOnSurface.Invoke();
+
             float verticalVelocity = 50f * Time.deltaTime * 5f;
             rb.velocity = new Vector3(0, verticalVelocity, 0);
         }
