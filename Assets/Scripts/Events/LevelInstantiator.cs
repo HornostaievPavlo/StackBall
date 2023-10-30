@@ -26,7 +26,7 @@ public class LevelInstantiator : MonoBehaviour
     private Transform currentFloor;
 
     private int currentLevel = 1;
-    public int CurrentLevel { get { return currentLevel; } }
+    public int CurrentLevel { get => currentLevel; }
 
     private int obstaclesAmountMultiplier = 7;
 
@@ -52,6 +52,7 @@ public class LevelInstantiator : MonoBehaviour
 
     private void ClearLevel()
     {
+        ProgressTracker.ObstaclesAmount = 0;
         if (currentBall != null) DestroyImmediate(currentBall.gameObject);
         if (currentFloor != null) DestroyImmediate(currentFloor.gameObject);
     }
@@ -111,6 +112,8 @@ public class LevelInstantiator : MonoBehaviour
 
             if (currentLevel > 100)
                 currentObstacle = Instantiate(currentLevelObstacles[Random.Range(3, 4)]);
+
+            ProgressTracker.ObstaclesAmount++;
 
             currentObstacle.transform.parent = obstaclesParent;
 

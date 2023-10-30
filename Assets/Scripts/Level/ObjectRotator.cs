@@ -7,7 +7,6 @@ public class ObjectRotator : MonoBehaviour
 
     private void Start() => EventManager.UnbreakableHit.AddListener(StopRotation);
 
-
     private void Update() => RotateObstacle();
 
     private void RotateObstacle()

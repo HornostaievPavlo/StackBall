@@ -25,10 +25,14 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     private TMP_Text nextLevelText;
 
+    [SerializeField]
+    private Slider progressSlider;
+
     private void Start()
     {
         EventManager.FloorHit.AddListener(LevelFinished);
         EventManager.UnbreakableHit.AddListener(LevelFailed);
+        EventManager.BreakableHit.AddListener(UpdateSliderValue);
 
         nextLevelButton.onClick.AddListener(CreateNextLevel);
         quitButton.onClick.AddListener(() => { Application.Quit(); });
@@ -51,6 +55,7 @@ public class GameUI : MonoBehaviour
         EventManager.CreateNextLevel();
 
         UpdateTextFields();
+        UpdateSliderValue();
 
         winPanel.SetActive(false);
     }
@@ -59,5 +64,12 @@ public class GameUI : MonoBehaviour
     {
         currentLevelText.text = levelInstantiator.CurrentLevel.ToString();
         nextLevelText.text = (levelInstantiator.CurrentLevel + 1).ToString();
+    }
+
+    private void UpdateSliderValue()
+    {
+        progressSlider.minValue = 1;
+        progressSlider.maxValue = ProgressTracker.ObstaclesAmount;
+        progressSlider.value = ProgressTracker.ObstaclesBroken;
     }
 }
