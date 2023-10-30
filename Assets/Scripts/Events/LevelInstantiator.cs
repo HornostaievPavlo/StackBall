@@ -18,7 +18,9 @@ public class LevelInstantiator : MonoBehaviour
 
     private GameObject currentObstacle;
 
-    public int currentLevel = 0;
+    private int currentLevel = 1;
+    public int CurrentLevel {  get { return currentLevel; } }
+
     private int obstaclesAmountMultiplier = 7;
 
     private void Start() => InstantiateLevel();
