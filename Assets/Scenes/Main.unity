@@ -1008,7 +1008,7 @@ GameObject:
   - component: {fileID: 863687139}
   - component: {fileID: 863687138}
   m_Layer: 5
-  m_Name: RetryLevelButton
+  m_Name: RestartLevelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1078,19 +1078,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 863687139}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &863687139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1396,19 +1384,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1097864635}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1097864635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,9 +1476,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInstantiator: {fileID: 395033918}
+  obstacleParent: {fileID: 1306800447}
   winPanel: {fileID: 397679499}
   losePanel: {fileID: 625959513}
   nextLevelButton: {fileID: 2059094136}
+  restartLevelButton: {fileID: 863687138}
   quitButton: {fileID: 1097864634}
   currentLevelText: {fileID: 2088063435}
   nextLevelText: {fileID: 1704224430}
@@ -1997,19 +1975,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1628332669}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1628332669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2343,19 +2309,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2059094137}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2059094137
 MonoBehaviour:
   m_ObjectHideFlags: 0

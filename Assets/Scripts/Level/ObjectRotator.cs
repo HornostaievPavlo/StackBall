@@ -5,7 +5,11 @@ public class ObjectRotator : MonoBehaviour
     [SerializeField]
     private float rotationSpeed;
 
-    private void Start() => EventManager.UnbreakableHit.AddListener(StopRotation);
+    private void Start()
+    {
+        EventManager.UnbreakableHit.AddListener(StopRotation);
+        EventManager.LevelRegenerated.AddListener(RestoreSpeed);
+    }
 
     private void Update() => RotateObstacle();
 
@@ -16,4 +20,6 @@ public class ObjectRotator : MonoBehaviour
     }
 
     private void StopRotation() => rotationSpeed = 0;
+
+    private void RestoreSpeed(bool isWon) => rotationSpeed = 100f;
 }

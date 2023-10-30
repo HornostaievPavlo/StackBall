@@ -19,10 +19,10 @@ public class ProgressTracker : MonoBehaviour
     private void Start()
     {
         EventManager.BreakableHit.AddListener(IncreaseCount);
-        EventManager.NextLevelSelected.AddListener(ResetAmountOfBroken);
+        EventManager.LevelRegenerated.AddListener(ResetAmountOfBroken);
     }
 
     private void IncreaseCount() => obstaclesBroken++;
 
-    private void ResetAmountOfBroken() => obstaclesBroken = 0;
+    private void ResetAmountOfBroken(bool isNew) => obstaclesBroken = 0;
 }

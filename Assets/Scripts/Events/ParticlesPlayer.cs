@@ -15,7 +15,7 @@ public class ParticlesPlayer : MonoBehaviour
         EventManager.UnbreakableHit.AddListener(PlayExplosion);
         EventManager.FloorHit.AddListener(PlayFloorHitParticle);
 
-        EventManager.NextLevelSelected.AddListener(RemoveParticles);
+        EventManager.LevelRegenerated.AddListener(RemoveParticles);
     }
 
     private void PlayExplosion()
@@ -30,9 +30,9 @@ public class ParticlesPlayer : MonoBehaviour
 
     private void PlayFloorHitParticle() => Instantiate(floorHitParticle.gameObject);
 
-    private void RemoveParticles()
+    private void RemoveParticles(bool isNew)
     {
         var playingParticles = FindObjectOfType<ParticleSystem>();
-        DestroyImmediate(playingParticles.gameObject);
+        if (playingParticles != null) DestroyImmediate(playingParticles.gameObject);
     }
 }

@@ -8,6 +8,9 @@ public class GameUI : MonoBehaviour
     private LevelInstantiator levelInstantiator;
 
     [SerializeField]
+    private Transform obstacleParent;
+
+    [SerializeField]
     private GameObject winPanel;
 
     [SerializeField]
@@ -15,6 +18,9 @@ public class GameUI : MonoBehaviour
 
     [SerializeField]
     private Button nextLevelButton;
+
+    [SerializeField]
+    private Button restartLevelButton;
 
     [SerializeField]
     private Button quitButton;
@@ -30,34 +36,43 @@ public class GameUI : MonoBehaviour
 
     private void Start()
     {
-        EventManager.FloorHit.AddListener(LevelFinished);
-        EventManager.UnbreakableHit.AddListener(LevelFailed);
+        EventManager.FloorHit.AddListener(() => ShowMenu(true));
+        EventManager.UnbreakableHit.AddListener(() => ShowMenu(false));
+
         EventManager.BreakableHit.AddListener(UpdateSliderValue);
 
-        nextLevelButton.onClick.AddListener(CreateNextLevel);
+        nextLevelButton.onClick.AddListener(() => LoadLevel(true));
+        restartLevelButton.onClick.AddListener(() => LoadLevel(false));
         quitButton.onClick.AddListener(() => { Application.Quit(); });
 
         UpdateTextFields();
     }
 
-    private void LevelFinished()
+    private void ShowMenu(bool isLevelFinished)
     {
-        winPanel.SetActive(true);
+        if (isLevelFinished) winPanel.SetActive(true);
+        else losePanel.SetActive(true);
     }
 
-    private void LevelFailed()
+    private void LoadLevel(bool isLevelNew)
     {
-        losePanel.SetActive(true);
-    }
+        if (!isLevelNew)
+        {
+            var children = obstacleParent.GetComponentsInChildren<ObstacleCircle>();
 
-    private void CreateNextLevel()
-    {
-        EventManager.CreateNextLevel();
+            foreach (var child in children)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        EventManager.CreateLevel(isLevelNew);
 
         UpdateTextFields();
         UpdateSliderValue();
 
         winPanel.SetActive(false);
+        losePanel.SetActive(false);
     }
 
     private void UpdateTextFields()

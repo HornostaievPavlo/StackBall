@@ -32,20 +32,22 @@ public class LevelInstantiator : MonoBehaviour
 
     private void Start()
     {
-        InstantiateLevel();
+        InstantiateLevel(false);
 
-        EventManager.NextLevelSelected.AddListener(InstantiateLevel);
+        EventManager.LevelRegenerated.AddListener(InstantiateLevel);
     }
 
-    public void InstantiateLevel()
+    public void InstantiateLevel(bool isLevelFinished)
     {
+        if (isLevelFinished) currentLevel++;
+
         ClearLevel();
 
         currentBall = Instantiate(ballPrefab).transform;
         currentFloor = Instantiate(floorPrefab).transform;
 
         ReassignCameraPoints(currentBall, currentFloor);
-
+        Debug.Log("mutim level");
         SelectObstacleModel();
         InstantiateObstaclesForLevel();
     }
@@ -67,7 +69,6 @@ public class LevelInstantiator : MonoBehaviour
     {
         int randomModel = Random.Range(0, 5);
 
-        currentLevel++;
         if (currentLevel > 9) obstaclesAmountMultiplier = 0;
 
         switch (randomModel)

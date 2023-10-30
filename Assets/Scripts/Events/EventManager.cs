@@ -8,7 +8,7 @@ public static class EventManager
     public static UnityEvent UnbreakableHit = new UnityEvent();
     public static UnityEvent FloorHit = new UnityEvent();
 
-    public static UnityEvent NextLevelSelected = new UnityEvent();
+    public static UnityEvent<bool> LevelRegenerated = new UnityEvent<bool>();
 
     public static void JumpOnSurface() => BallJumped.Invoke();
 
@@ -18,5 +18,5 @@ public static class EventManager
 
     public static void HitFloor() => FloorHit.Invoke();
 
-    public static void CreateNextLevel() => NextLevelSelected.Invoke();
+    public static void CreateLevel(bool isNew) => LevelRegenerated.Invoke(isNew);
 }
