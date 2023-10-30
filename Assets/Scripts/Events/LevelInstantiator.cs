@@ -3,13 +3,16 @@ using UnityEngine;
 public class LevelInstantiator : MonoBehaviour
 {
     [SerializeField]
+    private CameraSystem cameraSystem;
+
+    [SerializeField]
     private Transform obstaclesParent;
 
     [SerializeField]
-    private GameObject floorPrefab;
+    private GameObject ballPrefab;
 
     [SerializeField]
-    private GameObject centerCylinder;
+    private GameObject floorPrefab;
 
     [SerializeField]
     private GameObject[] obstacles;
@@ -18,26 +21,53 @@ public class LevelInstantiator : MonoBehaviour
 
     private GameObject currentObstacle;
 
+    private Transform currentBall;
+
+    private Transform currentFloor;
+
     private int currentLevel = 1;
-    public int CurrentLevel {  get { return currentLevel; } }
+    public int CurrentLevel { get { return currentLevel; } }
 
     private int obstaclesAmountMultiplier = 7;
 
-    private void Start() => InstantiateLevel();
+    private void Start()
+    {
+        InstantiateLevel();
+
+        EventManager.NextLevelSelected.AddListener(InstantiateLevel);
+    }
 
     public void InstantiateLevel()
     {
-        currentLevel++;
+        ClearLevel();
 
-        if (currentLevel > 9) obstaclesAmountMultiplier = 0;
+        currentBall = Instantiate(ballPrefab).transform;
+        currentFloor = Instantiate(floorPrefab).transform;
+
+        ReassignCameraPoints(currentBall, currentFloor);
 
         SelectObstacleModel();
         InstantiateObstaclesForLevel();
     }
 
+    private void ClearLevel()
+    {
+        if (currentBall != null) DestroyImmediate(currentBall.gameObject);
+        if (currentFloor != null) DestroyImmediate(currentFloor.gameObject);
+    }
+
+    private void ReassignCameraPoints(Transform newBall, Transform newFloor)
+    {
+        cameraSystem.CurrentBall = newBall;
+        cameraSystem.CurrentFloor = newFloor;
+    }
+
     private void SelectObstacleModel()
     {
         int randomModel = Random.Range(0, 5);
+
+        currentLevel++;
+        if (currentLevel > 9) obstaclesAmountMultiplier = 0;
 
         switch (randomModel)
         {
@@ -91,9 +121,7 @@ public class LevelInstantiator : MonoBehaviour
             currentObstacle.transform.eulerAngles = new Vector3(0, rotationOffset, 0);
         }
 
-        var floor = Instantiate(floorPrefab);
-
         float floorPositionOffset = i - 0.01f;
-        floor.transform.position = new Vector3(0, floorPositionOffset, 0);
+        currentFloor.transform.position = new Vector3(0, floorPositionOffset, 0);
     }
 }

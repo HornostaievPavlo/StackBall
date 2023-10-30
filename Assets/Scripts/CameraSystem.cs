@@ -2,24 +2,26 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    [SerializeField]
     private Transform ball;
+    public Transform CurrentBall { set => ball = value; }
 
     private Transform floor;
+    public Transform CurrentFloor { set => floor = value; }
 
     private Vector3 offset;
 
-    private void Update() => FollowBall();
-
-    private void FollowBall()
+    private void Update()
     {
-        if (floor == null)
-            floor = GameObject.Find("Floor(Clone)").GetComponent<Transform>();
+        FollowBall(ball, floor);
+    }
 
+    private void FollowBall(Transform ball, Transform floor)
+    {
         float offsetOnFloor = floor.position.y + 4f;
 
         if (transform.position.y > ball.position.y &&
-            transform.position.y > offsetOnFloor)
+            transform.position.y > offsetOnFloor ||
+            transform.position.y < (ball.position.y - 5f))
         {
             offset = new Vector3(transform.position.x, ball.position.y, transform.position.z);
         }

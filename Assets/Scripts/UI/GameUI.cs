@@ -30,11 +30,10 @@ public class GameUI : MonoBehaviour
         EventManager.FloorHit.AddListener(LevelFinished);
         EventManager.UnbreakableHit.AddListener(LevelFailed);
 
-        UpdateTextFields();
-
         nextLevelButton.onClick.AddListener(CreateNextLevel);
-
         quitButton.onClick.AddListener(() => { Application.Quit(); });
+
+        UpdateTextFields();
     }
 
     private void LevelFinished()
@@ -51,9 +50,9 @@ public class GameUI : MonoBehaviour
     {
         EventManager.CreateNextLevel();
 
-        levelInstantiator.InstantiateLevel();
-
         UpdateTextFields();
+
+        winPanel.SetActive(false);
     }
 
     private void UpdateTextFields()
