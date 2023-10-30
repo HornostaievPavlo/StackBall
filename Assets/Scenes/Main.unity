@@ -307,6 +307,7 @@ MonoBehaviour:
   obstaclesParent: {fileID: 1306800447}
   floorPrefab: {fileID: 3293644397374515874, guid: de014377afc97fb458185f5869ca0bd9,
     type: 3}
+  centerCylinder: {fileID: 0}
   obstacles:
   - {fileID: 4083092216702661192, guid: 4090eb26e9a6243499e279e647626f17, type: 3}
   - {fileID: 992441524142787588, guid: b44c72689c6c52746828431f75d73de2, type: 3}

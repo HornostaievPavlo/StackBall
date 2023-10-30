@@ -20,45 +20,52 @@ public class Ball : MonoBehaviour
         var hitSurfaceType = collision.gameObject.GetComponent<Surface>().surfaceType;
 
         if (isSmashing)
-        {
-            switch (hitSurfaceType)
-            {
-                case SurfaceType.Breakable:
-                    EventManager.HitBreakableSurface();
-
-                    var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
-                    circle.ShatterWholeCircle();
-                    break;
-
-                case SurfaceType.Unbreakable:
-                    EventManager.HitUnbreakableSurface();
-                    rb.isKinematic = true;
-                    break;
-
-                case SurfaceType.Floor:
-                    EventManager.HitFloor();
-                    rb.isKinematic = true;
-                    break;
-            }
-        }
+            SmashSurface(hitSurfaceType, collision.transform);
         else
+            JumpOnSurface(hitSurfaceType, collision.transform);
+    }
+
+    private void SmashSurface(SurfaceType surfaceType, Transform collision)
+    {
+        switch (surfaceType)
         {
-            if (hitSurfaceType == SurfaceType.Floor)
-            {
+            case SurfaceType.Breakable:
+                EventManager.HitBreakableSurface();
+
+                var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
+                circle.ShatterWholeCircle();
+                break;
+
+            case SurfaceType.Unbreakable:
+                EventManager.HitUnbreakableSurface();
+                rb.isKinematic = true;
+                break;
+
+            case SurfaceType.Floor:
                 EventManager.HitFloor();
                 rb.isKinematic = true;
-            }
-
-            EventManager.JumpOnSurface();
-
-            var splash = Instantiate(splashPrefab, collision.transform);
-
-            float verticalOffsetFromBall = transform.position.y - 0.22f;
-            splash.transform.position = new Vector3(transform.position.x, verticalOffsetFromBall, transform.position.z);
-
-            float verticalVelocityValue = 50f * Time.deltaTime * 5f;
-            rb.velocity = new Vector3(0, verticalVelocityValue, 0);
+                break;
         }
+    }
+
+    private void JumpOnSurface(SurfaceType surfaceType, Transform collision)
+    {
+        if (surfaceType == SurfaceType.Floor)
+        {
+            EventManager.HitFloor();
+            rb.isKinematic = true;
+            return;
+        }
+
+        EventManager.JumpOnSurface();
+
+        var splash = Instantiate(splashPrefab, collision.transform);
+
+        float verticalOffsetFromBall = transform.position.y - 0.22f;
+        splash.transform.position = new Vector3(transform.position.x, verticalOffsetFromBall, transform.position.z);
+
+        float verticalVelocityValue = 50f * Time.deltaTime * 5f;
+        rb.velocity = new Vector3(0, verticalVelocityValue, 0);
     }
 
     private void ProcessInput()

@@ -9,6 +9,9 @@ public class LevelInstantiator : MonoBehaviour
     private GameObject floorPrefab;
 
     [SerializeField]
+    private GameObject centerCylinder;
+
+    [SerializeField]
     private GameObject[] obstacles;
 
     private GameObject[] currentLevelObstacles = new GameObject[4];
@@ -20,14 +23,13 @@ public class LevelInstantiator : MonoBehaviour
 
     private void Start() => InstantiateLevel();
 
-    private void InstantiateLevel()
+    public void InstantiateLevel()
     {
         currentLevel++;
 
         if (currentLevel > 9) obstaclesAmountMultiplier = 0;
 
         SelectObstacleModel();
-
         InstantiateObstaclesForLevel();
     }
 
