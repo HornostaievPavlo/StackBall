@@ -47,7 +47,7 @@ public class LevelInstantiator : MonoBehaviour
         currentFloor = Instantiate(floorPrefab).transform;
 
         ReassignCameraPoints(currentBall, currentFloor);
-        Debug.Log("mutim level");
+
         SelectObstacleModel();
         InstantiateObstaclesForLevel();
     }
@@ -61,6 +61,8 @@ public class LevelInstantiator : MonoBehaviour
 
     private void ReassignCameraPoints(Transform newBall, Transform newFloor)
     {
+        cameraSystem.ResetPosition();
+
         cameraSystem.CurrentBall = newBall;
         cameraSystem.CurrentFloor = newFloor;
     }

@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     private Rigidbody rb;
 
     private bool isSmashing;
+    public bool IsSmashing { get => isSmashing; }
 
     private void Awake() => rb = GetComponent<Rigidbody>();
 
