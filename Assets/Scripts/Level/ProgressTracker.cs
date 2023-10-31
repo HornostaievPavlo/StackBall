@@ -23,14 +23,17 @@ public class ProgressTracker : MonoBehaviour
     {
         EventManager.BreakableHit.AddListener(IncreaseCount);
         EventManager.LevelRegenerated.AddListener(ResetAmountOfBroken);
-        EventManager.FloorHit.AddListener(() => SetCoreState(true));
 
         EventManager.FloorHit.AddListener(() => SetCoreState(false));
     }
 
     private void IncreaseCount() => obstaclesBroken++;
 
-    private void ResetAmountOfBroken(bool isNew) => obstaclesBroken = 0;
+    private void ResetAmountOfBroken(bool isNew)
+    {
+        obstaclesBroken = 0;
+        coreCylinder.SetActive(true);
+    }
 
     private void SetCoreState(bool isActive) => coreCylinder.SetActive(isActive);
 }
