@@ -32,7 +32,6 @@ public class Ball : MonoBehaviour
         {
             case SurfaceType.Breakable:
                 EventManager.HitBreakableSurface();
-
                 var circle = collision.transform.parent.GetComponent<ObstacleCircle>();
                 circle.ShatterWholeCircle();
                 break;
