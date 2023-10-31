@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class ProgressTracker : MonoBehaviour
 {
-    [SerializeField] private static int obstaclesAmount;
+    private static int obstaclesAmount;
     public static int ObstaclesAmount
     {
         get => obstaclesAmount;
         set => obstaclesAmount = value;
     }
 
-    [SerializeField] private static int obstaclesBroken;
+    private static int obstaclesBroken;
     public static int ObstaclesBroken
     {
         get => obstaclesBroken;

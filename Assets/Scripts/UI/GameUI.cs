@@ -46,11 +46,16 @@ public class GameUI : MonoBehaviour
         quitButton.onClick.AddListener(() => { Application.Quit(); });
 
         UpdateTextFields();
+        UpdateSliderValue();
     }
 
     private void ShowMenu(bool isLevelFinished)
     {
-        if (isLevelFinished) winPanel.SetActive(true);
+        if (isLevelFinished)
+        {
+            progressSlider.value = progressSlider.maxValue;
+            winPanel.SetActive(true);
+        }
         else losePanel.SetActive(true);
     }
 
@@ -83,7 +88,7 @@ public class GameUI : MonoBehaviour
 
     private void UpdateSliderValue()
     {
-        progressSlider.minValue = 1;
+        progressSlider.minValue = 0;
         progressSlider.maxValue = ProgressTracker.ObstaclesAmount;
         progressSlider.value = ProgressTracker.ObstaclesBroken;
     }
