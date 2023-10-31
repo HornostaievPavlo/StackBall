@@ -51,6 +51,8 @@ public class GameUI : MonoBehaviour
 
     private void ShowMenu(bool isLevelFinished)
     {
+        quitButton.gameObject.SetActive(true);
+
         if (isLevelFinished)
         {
             progressSlider.value = progressSlider.maxValue;
@@ -61,6 +63,8 @@ public class GameUI : MonoBehaviour
 
     private void LoadLevel(bool isLevelNew)
     {
+        quitButton.gameObject.SetActive(false);
+
         if (!isLevelNew)
         {
             var children = obstacleParent.GetComponentsInChildren<ObstacleCircle>();
