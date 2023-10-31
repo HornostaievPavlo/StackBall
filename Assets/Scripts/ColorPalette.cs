@@ -11,8 +11,13 @@ public class ColorPalette : MonoBehaviour
     [SerializeField]
     private Color[] colors;
 
+    private Camera mainCamera;
+
     private void Start()
     {
+        mainCamera = Camera.main;
+        ApplyColorPalette(true);
+
         EventManager.LevelRegenerated.AddListener(ApplyColorPalette);
     }
 
@@ -24,6 +29,9 @@ public class ColorPalette : MonoBehaviour
 
         StartCoroutine(ApplyColorForBreakables(randomColor));
         StartCoroutine(ApplyColorForFloor(randomColor));
+
+        ApplyColorForCameraBackground(randomColor);
+
         ApplyColorForUI(randomColor);
     }
 
@@ -39,6 +47,7 @@ public class ColorPalette : MonoBehaviour
             material.color = colors[colorIndex];
         }
     }
+
     private IEnumerator ApplyColorForFloor(int colorIndex)
     {
         yield return new WaitForEndOfFrame();
@@ -47,6 +56,17 @@ public class ColorPalette : MonoBehaviour
         var floorMat = floor.GetComponentInChildren<MeshRenderer>().material;
 
         floorMat.color = colors[colorIndex];
+    }
+
+    private void ApplyColorForCameraBackground(int colorIndex)
+    {
+        Color.RGBToHSV(colors[colorIndex], out float h, out float s, out float v);
+        float desaturationValueNormalized = 0.1f;
+        s *= desaturationValueNormalized;
+
+        var desaturatedColor = Color.HSVToRGB(h, s, v);
+
+        mainCamera.backgroundColor = desaturatedColor;
     }
 
     private void ApplyColorForUI(int colorIndex)
