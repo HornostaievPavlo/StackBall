@@ -38,12 +38,10 @@ public class Ball : MonoBehaviour
 
             case SurfaceType.Unbreakable:
                 EventManager.HitUnbreakableSurface();
-                rb.isKinematic = true;
                 break;
 
             case SurfaceType.Floor:
                 EventManager.HitFloor();
-                rb.isKinematic = true;
                 break;
         }
     }

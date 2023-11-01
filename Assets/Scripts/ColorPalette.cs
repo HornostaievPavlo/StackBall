@@ -23,8 +23,6 @@ public class ColorPalette : MonoBehaviour
 
     private void ApplyColorPalette(bool isLevelNew)
     {
-        if (!isLevelNew) return;
-
         int randomColor = Random.Range(0, colors.Length);
 
         StartCoroutine(ApplyColorForBreakables(randomColor));
