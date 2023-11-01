@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    private Transform ball;
-    public Transform CurrentBall { set => ball = value; }
+    private Ball ball;
+    private Transform ballTransform;
+    public Transform CurrentBall
+    {
+        set
+        {
+            ball = value.gameObject.GetComponent<Ball>();
+            ballTransform = value;
+        }
+    }
 
     private Transform floor;
     public Transform CurrentFloor { set => floor = value; }
@@ -17,7 +25,7 @@ public class CameraSystem : MonoBehaviour
         CheckBallState();
 
         if (isFollowingNeeded)
-            FollowBall(ball, floor);
+            FollowBall(ballTransform, floor);
     }
 
     private void FollowBall(Transform ball, Transform floor)
@@ -33,11 +41,7 @@ public class CameraSystem : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.deltaTime);
     }
 
-    private void CheckBallState()
-    {
-        var ballComponent = ball.GetComponent<Ball>();
-        isFollowingNeeded = ballComponent.IsSmashing;
-    }
+    private void CheckBallState() => isFollowingNeeded = ball.IsSmashing;
 
     public void ResetPosition() => transform.position = startPosition;
 }

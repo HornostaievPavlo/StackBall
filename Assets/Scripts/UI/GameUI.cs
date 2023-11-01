@@ -11,11 +11,16 @@ public class GameUI : MonoBehaviour
     private Transform obstacleParent;
 
     [SerializeField]
+    private Slider progressSlider;
+
+    [Header("Panels")]
+    [SerializeField]
     private GameObject winPanel;
 
     [SerializeField]
     private GameObject losePanel;
 
+    [Header("Buttons")]
     [SerializeField]
     private Button nextLevelButton;
 
@@ -25,14 +30,12 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     private Button quitButton;
 
+    [Header("Text fields")]
     [SerializeField]
     private TMP_Text currentLevelText;
 
     [SerializeField]
     private TMP_Text nextLevelText;
-
-    [SerializeField]
-    private Slider progressSlider;
 
     private void Start()
     {
@@ -43,6 +46,7 @@ public class GameUI : MonoBehaviour
 
         nextLevelButton.onClick.AddListener(() => LoadLevel(true));
         restartLevelButton.onClick.AddListener(() => LoadLevel(false));
+
         quitButton.onClick.AddListener(() => { Application.Quit(); });
 
         UpdateTextFields();

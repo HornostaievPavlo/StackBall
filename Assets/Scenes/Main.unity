@@ -1612,6 +1612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelInstantiator: {fileID: 395033918}
   obstacleParent: {fileID: 1306800447}
+  progressSlider: {fileID: 755864950}
   winPanel: {fileID: 397679499}
   losePanel: {fileID: 625959513}
   nextLevelButton: {fileID: 2059094136}
@@ -1619,7 +1620,6 @@ MonoBehaviour:
   quitButton: {fileID: 1097864634}
   currentLevelText: {fileID: 2088063435}
   nextLevelText: {fileID: 1704224430}
-  progressSlider: {fileID: 755864950}
 --- !u!1 &1306800446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,7 +2800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &7044619808281762261
 GameObject:
   m_ObjectHideFlags: 0

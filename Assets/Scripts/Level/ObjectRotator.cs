@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObjectRotator : MonoBehaviour
 {
-    private float rotationSpeed = 125f;
+    private readonly float rotationSpeed = 125f;
 
     private void Update() => RotateObstacle();
 
